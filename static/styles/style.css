@@ -1,0 +1,72 @@
+body {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-image: linear-gradient(rgba(34, 34, 34, .7), rgb(34, 34, 34) 57%), url("/static/images/background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+    min-height: 100vh;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #222222;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.navbar a {
+    color: #87837b;
+    text-align: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: 2px solid transparent;
+}
+
+.navbar a:not(.logo, .cog):hover {
+    margin: 13px;
+    background-color: #555;
+    border-radius: 4px;
+    padding: 7px 7px;
+    border-color: white;
+}
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    color: #fff;
+}
+
+.navbar .logo img {
+    height: 50px;
+    width: auto;
+    margin-right: 10px;
+}
+
+.navbar .logo a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.navbar .cog {
+    margin-left: auto;
+}
+
+.navbar .cog img {
+    height: 30px;
+    width: auto;
+}
+
+.navbar .active {
+    color: #fff;
+}
+
+.content {
+    padding-top: 74px;
+}
