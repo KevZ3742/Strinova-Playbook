@@ -41,7 +41,6 @@ function AddScene() {
     sequenceBox.insertBefore(newButton, buttons[buttons.length - 1]);
 }
 
-
 function ChangeScene(index) {
     const buttons = document.querySelectorAll('.sequence-box-container button');
     
