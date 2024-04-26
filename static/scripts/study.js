@@ -85,7 +85,6 @@ function ChangeColor(button) {
 const colorPicker = new iro.ColorPicker("#color-picker", {
     width: 175, color: "fff"
 });
-let temp = [];
 colorPicker.on('color:change', function (color) {
     colorIndicator.style.backgroundColor = color.hexString;
 });
