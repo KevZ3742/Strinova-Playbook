@@ -42,6 +42,18 @@ function AddScene() {
 }
 
 
-function ChangeScene(index){
-    console.log(index)
+function ChangeScene(index) {
+    const buttons = document.querySelectorAll('.sequence-box-container button');
+    
+    buttons.forEach(button => {
+        button.querySelector('.scene').classList.remove('current');
+    });
+
+    buttons.forEach(button => {
+        if (parseInt(button.querySelector('.scene').textContent) === index) {
+            button.querySelector('.scene').classList.add('current');
+        }
+    });
+
+    console.log(index);
 }
