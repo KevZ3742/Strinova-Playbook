@@ -24,12 +24,12 @@
 }
 
 .select {
-    background: #2a2f3b;
+    background: #222222;
     color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 2px #2a2f3b solid;
+    border: 2px #222222 solid;
     border-radius: .5em;
     padding: 1em;
     cursor: pointer;
@@ -61,7 +61,7 @@
 .menu {
     list-style: none;
     padding: .2em .5em;
-    background: #323741;
+    background: #222222;
     border: 1px #363a43 solid;
     box-shadow: 0 .5em 1em rgba(0, 0, 0, .2);
     border-radius: .5em;
@@ -85,11 +85,11 @@
 }
 
 .menu li:hover {
-    background: #2a2d35;
+    background: #323741;
 }
 
 .active-dropdown {
-    background: #23242a;
+    background: #2a2d35;
 }
 
 .menu-open {
