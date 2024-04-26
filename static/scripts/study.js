@@ -57,6 +57,18 @@ function ChangeScene(index) {
             button.querySelector('.scene').classList.add('current');
         }
     });
+}
 
-    console.log(index);
+function ChangeTool(button) {
+    const tools = document.querySelectorAll('.tool-box button');
+
+    tools.forEach(tool => {
+        tool.querySelector('.tool').classList.remove('selected-tool');
+    });
+
+    tools.forEach(tool => {
+        if (tool === button) {
+            tool.querySelector('.tool').classList.add('selected-tool');
+        }
+    });
 }
