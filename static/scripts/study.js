@@ -73,7 +73,7 @@ function ChangeTool(button) {
     });
 }
 
-function ChangeColor(button){
+function ChangeColor(button) {
     var indicator = document.querySelector(".color-indicator");
     var element = button.querySelector(".past-color");
     var elementBgColor = window.getComputedStyle(element).getPropertyValue("background-color");
@@ -81,3 +81,48 @@ function ChangeColor(button){
 
     indicator.style.backgroundColor = elementBgColor;
 }
+
+let colorIndicator = document.getElementById("color-indicator");
+const colorPicker = new iro.ColorPicker("#color-picker", {
+    width: 175, color: "fff"
+});
+colorPicker.on('color:change', function (color) {
+    colorIndicator.style.backgroundColor = color.hexString;
+});
+
+const colorPickerElement = document.getElementById('color-picker');
+
+let mouseOnColorPicker = false;
+
+// working backwards, first color being set to new color
+function IncrementPastColors(){
+    const pastColors = document.querySelectorAll(".past-color");
+    pastColors.forEach((color, index) => {
+        if (index === pastColors.length - 1) {
+            color.style.backgroundColor = colorIndicator.style.backgroundColor;
+        } else {
+            const nextColor = pastColors[index + 1];
+            color.style.backgroundColor = nextColor.style.backgroundColor;
+        }
+    });
+}
+
+colorPickerElement.addEventListener('mousedown', function (event) {
+    mouseOnColorPicker = true;
+});
+
+colorPickerElement.addEventListener('mouseup', function (event) {
+    if (mouseOnColorPicker) {
+        console.log('up');
+        IncrementPastColors();
+    }
+    mouseOnColorPicker = false;
+});
+
+document.addEventListener('mouseup', function (event) {
+    if (mouseOnColorPicker) {
+        console.log('up');
+        IncrementPastColors();
+    }
+    mouseOnColorPicker = false;
+});
