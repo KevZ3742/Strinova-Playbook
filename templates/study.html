@@ -68,6 +68,44 @@
                     <img src="/static/images/tools/video.png" class="tool">
                 </button>
             </div>
+            <div class="colors">
+                <div class="color-picker"></div>
+                <div id="color-indicator" class="color-indicator">
+                    <div class="past-colors">
+                        <button onclick="ChangeColor(this)">
+                            <div class="past-color"></div>
+                        </button>
+                        <button onclick="ChangeColor(this)">
+                            <div class="past-color"></div>
+                        </button>
+                        <button onclick="ChangeColor(this)">
+                            <div class="past-color"></div>
+                        </button>
+                        <button onclick="ChangeColor(this)">
+                            <div class="past-color"></div>
+                        </button>
+                        <button onclick="ChangeColor(this)">
+                            <div class="past-color"></div>
+                        </button>
+                        <button onclick="ChangeColor(this)">
+                            <div class="past-color"></div>
+                        </button>
+                        <button onclick="ChangeColor(this)">
+                            <div class="past-color"></div>
+                        </button>
+                        <button onclick="ChangeColor(this)">
+                            <div class="past-color"></div>
+                        </button>
+                        <button onclick="ChangeColor(this)">
+                            <div class="past-color"></div>
+                        </button>
+                        <button onclick="ChangeColor(this)">
+                            <div class="past-color"></div>
+                        </button>
+                    </div>
+                </div>
+                <div id="color-picker"></div>
+            </div>
         </div>
         <div class="scene-loader">
             <img src="/static/images/maps/404_Base.png" class="map">
@@ -75,5 +113,15 @@
     </div>
     <script src="/static/scripts/script.js"></script>
     <script src="/static/scripts/study.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+    <script>
+        let colorIndicator = document.getElementById("color-indicator");
+        const colorPicker = new iro.ColorPicker("#color-picker", {
+            width:175, color: "fff"
+        });
+        colorPicker.on('color:change', function(color){
+            colorIndicator.style.backgroundColor = color.hexString;
+        });
+    </script>
 </body>
 </html>

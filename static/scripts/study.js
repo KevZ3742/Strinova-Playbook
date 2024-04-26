@@ -72,3 +72,12 @@ function ChangeTool(button) {
         }
     });
 }
+
+function ChangeColor(button){
+    var indicator = document.querySelector(".color-indicator");
+    var element = button.querySelector(".past-color");
+    var elementBgColor = window.getComputedStyle(element).getPropertyValue("background-color");
+
+
+    indicator.style.backgroundColor = elementBgColor;
+}
