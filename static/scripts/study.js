@@ -73,8 +73,30 @@ function ChangeTool(button) {
     });
 }
 
-let colorIndicator = document.getElementById("color-indicator");
+function rgbToHex(rgb) {
+    const rgbArray = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    const hex = "#" + 
+         ("0" + parseInt(rgbArray[1],10).toString(16)).slice(-2) +
+         ("0" + parseInt(rgbArray[2],10).toString(16)).slice(-2) +
+         ("0" + parseInt(rgbArray[3],10).toString(16)).slice(-2);
+    return hex;
+}
+
 let pastColors = [];
+
+function ChangeColor(button) {
+    const colorPicker = document.querySelector('.color-picker');
+    const buttonColor = window.getComputedStyle(button).backgroundColor;
+    const hexColor = rgbToHex(buttonColor);
+    colorPicker.value = hexColor;
+    pastColors.unshift(hexColor);
+    IncrementPastColors();
+}
+
+function ColorChanged(color) {
+    pastColors.unshift(color);
+    IncrementPastColors();
+}
 
 function IncrementPastColors(){
     if (pastColors.length > 10) {
@@ -86,29 +108,3 @@ function IncrementPastColors(){
         button.style.backgroundColor = pastColors[index];
     });
 }
-
-function ChangeColor(button) {
-    var element = button.querySelector(".past-color");
-    var elementBgColor = window.getComputedStyle(element).getPropertyValue("background-color");
-
-    colorIndicator.style.backgroundColor = elementBgColor;
-    pastColors.unshift(elementBgColor);
-    IncrementPastColors();
-}
-
-let temp;
-
-const colorPicker = new iro.ColorPicker("#color-picker", {
-    width: 175, color: "fff"
-});
-colorPicker.on('color:change', function (color) {
-    temp = color.hexString;
-});
-
-function ColorOnMouseUp(){
-    colorIndicator.style.backgroundColor = temp;
-    pastColors.unshift(temp);
-    IncrementPastColors();
-}
-
-const colorPickerElement = document.getElementById('color-picker');

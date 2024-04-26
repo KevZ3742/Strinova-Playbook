@@ -185,10 +185,6 @@ button {
     max-height: 80%;
 }
 
-.tool-box {
-    margin-bottom: 15px;
-}
-
 .tool {
     width: 3em;
     height: 3em;
@@ -207,45 +203,25 @@ button {
     filter: invert(1);
 }
 
-.colors{
+.color-box{
+    margin-bottom: 15px;
     display: flex;
     justify-content: center;
-    align-items: top;
+    align-items: center;
 }
 
 .color-picker{
-    position: relative;
-}
-
-.color-indicator{
-    display: inline-block;
-    width: 2.5em;
-    height: 2.5em;
-    background-color: white;
+    width: 3em;
+    height: 3em;
     border-radius: .5em;
-    vertical-align: middle;
-    border: 2px solid white;
-}
-
-.past-colors{
-    margin-top: 2.5em;
-    padding-top: 5px;
-    
+    background-color: white;
+    margin: 5px;
 }
 
 .past-color{
-    display: inline-block;
-    width: 15px;
-    height: 15px;
+    width: 14px;
+    height: 14px;
+    border-radius: .5em;
     background-color: white;
-    border-radius: 10em;
-    vertical-align: middle;
-    margin-left: 2.5px;
+    margin: 5px;
 }
-
-#color-picker{
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 40px;
-}
-
