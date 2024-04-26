@@ -74,19 +74,41 @@ function ChangeTool(button) {
 }
 
 let colorIndicator = document.getElementById("color-indicator");
+let pastColors = [];
+
+function IncrementPastColors(){
+    if (pastColors.length > 10) {
+        pastColors.splice(10);
+    }
+
+    const pastColorButtons = document.querySelectorAll('.past-color');
+    pastColorButtons.forEach((button, index) => {
+        button.style.backgroundColor = pastColors[index];
+    });
+}
 
 function ChangeColor(button) {
     var element = button.querySelector(".past-color");
     var elementBgColor = window.getComputedStyle(element).getPropertyValue("background-color");
 
     colorIndicator.style.backgroundColor = elementBgColor;
+    pastColors.unshift(elementBgColor);
+    IncrementPastColors();
 }
+
+let temp;
 
 const colorPicker = new iro.ColorPicker("#color-picker", {
     width: 175, color: "fff"
 });
 colorPicker.on('color:change', function (color) {
-    colorIndicator.style.backgroundColor = color.hexString;
+    temp = color.hexString;
 });
+
+function ColorOnMouseUp(){
+    colorIndicator.style.backgroundColor = temp;
+    pastColors.unshift(temp);
+    IncrementPastColors();
+}
 
 const colorPickerElement = document.getElementById('color-picker');
