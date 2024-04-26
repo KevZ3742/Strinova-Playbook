@@ -26,3 +26,22 @@ dropdowns.forEach(dropdown => {
         });
     });
 });
+
+function AddScene() {
+    const sequenceBox = document.querySelector('.sequence-box-container');
+    const buttons = sequenceBox.querySelectorAll('button');
+
+    const lastIndex = buttons.length > 0 ? parseInt(buttons[buttons.length - 2].querySelector('.scene').textContent) : 0;
+    
+    const newButton = document.createElement('button');
+    const newIndex = lastIndex + 1;
+    newButton.innerHTML = `<div class="scene">${newIndex}</div>`;
+    newButton.onclick = () => ChangeScene(newIndex);
+
+    sequenceBox.insertBefore(newButton, buttons[buttons.length - 1]);
+}
+
+
+function ChangeScene(index){
+    console.log(index)
+}
