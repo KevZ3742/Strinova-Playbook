@@ -94,17 +94,18 @@ const colorPickerElement = document.getElementById('color-picker');
 
 let mouseOnColorPicker = false;
 
-// working backwards, first color being set to new color
 function IncrementPastColors(){
     const pastColors = document.querySelectorAll(".past-color");
-    pastColors.forEach((color, index) => {
-        if (index === pastColors.length - 1) {
-            color.style.backgroundColor = colorIndicator.style.backgroundColor;
+
+    for (let i = pastColors.length - 1; i >= 0; i--) {
+        if (i === 0) {
+            pastColors[i].style.backgroundColor = colorIndicator.style.backgroundColor;
         } else {
-            const nextColor = pastColors[index + 1];
-            color.style.backgroundColor = nextColor.style.backgroundColor;
+            const prevColor = pastColors[i - 1];
+            const currentColor = pastColors[i];
+            currentColor.style.backgroundColor = prevColor.style.backgroundColor;
         }
-    });
+    }
 }
 
 colorPickerElement.addEventListener('mousedown', function (event) {
