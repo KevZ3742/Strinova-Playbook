@@ -73,57 +73,21 @@ function ChangeTool(button) {
     });
 }
 
+let colorIndicator = document.getElementById("color-indicator");
+
 function ChangeColor(button) {
-    var indicator = document.querySelector(".color-indicator");
     var element = button.querySelector(".past-color");
     var elementBgColor = window.getComputedStyle(element).getPropertyValue("background-color");
 
-
-    indicator.style.backgroundColor = elementBgColor;
+    colorIndicator.style.backgroundColor = elementBgColor;
 }
 
-let colorIndicator = document.getElementById("color-indicator");
 const colorPicker = new iro.ColorPicker("#color-picker", {
     width: 175, color: "fff"
 });
+let temp = [];
 colorPicker.on('color:change', function (color) {
     colorIndicator.style.backgroundColor = color.hexString;
 });
 
 const colorPickerElement = document.getElementById('color-picker');
-
-let mouseOnColorPicker = false;
-
-function IncrementPastColors(){
-    const pastColors = document.querySelectorAll(".past-color");
-
-    for (let i = pastColors.length - 1; i >= 0; i--) {
-        if (i === 0) {
-            pastColors[i].style.backgroundColor = colorIndicator.style.backgroundColor;
-        } else {
-            const prevColor = pastColors[i - 1];
-            const currentColor = pastColors[i];
-            currentColor.style.backgroundColor = prevColor.style.backgroundColor;
-        }
-    }
-}
-
-colorPickerElement.addEventListener('mousedown', function (event) {
-    mouseOnColorPicker = true;
-});
-
-colorPickerElement.addEventListener('mouseup', function (event) {
-    if (mouseOnColorPicker) {
-        console.log('up');
-        IncrementPastColors();
-    }
-    mouseOnColorPicker = false;
-});
-
-document.addEventListener('mouseup', function (event) {
-    if (mouseOnColorPicker) {
-        console.log('up');
-        IncrementPastColors();
-    }
-    mouseOnColorPicker = false;
-});
