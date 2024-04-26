@@ -23,6 +23,10 @@ dropdowns.forEach(dropdown => {
             });
 
             option.classList.add('active-dropdown');
+
+            const map = document.querySelector('.map');
+            var mapLocation = "/static/images/maps/" + option.innerText.replace(/ /g, "_") + ".png";
+            map.src = mapLocation;
         });
     });
 });
@@ -32,7 +36,7 @@ function AddScene() {
     const buttons = sequenceBox.querySelectorAll('button');
 
     const lastIndex = buttons.length > 0 ? parseInt(buttons[buttons.length - 2].querySelector('.scene').textContent) : 0;
-    
+
     const newButton = document.createElement('button');
     const newIndex = lastIndex + 1;
     newButton.innerHTML = `<div class="scene">${newIndex}</div>`;
@@ -43,7 +47,7 @@ function AddScene() {
 
 function ChangeScene(index) {
     const buttons = document.querySelectorAll('.sequence-box-container button');
-    
+
     buttons.forEach(button => {
         button.querySelector('.scene').classList.remove('current');
     });
