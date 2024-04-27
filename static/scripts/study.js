@@ -1,3 +1,4 @@
+function DrawMapLogic(){
 const dropdowns = document.querySelectorAll('.dropdown');
 dropdowns.forEach(dropdown => {
     const select = dropdown.querySelector('.select');
@@ -24,25 +25,37 @@ dropdowns.forEach(dropdown => {
 
             option.classList.add('active-dropdown');
 
-            const mapCanvas = document.getElementById('canvas');
-            const mapCtx = mapCanvas.getContext('2d');
-            var mapLocation = "/static/images/maps/" + option.innerText.replace(/ /g, "_") + ".png";
-
-            const mapImage = new Image();
-            mapImage.onload = function() {
-                mapCtx.clearRect(0, 0, mapCanvas.width, mapCanvas.height);
-
-                const desiredWidth = 680;
-                const desiredHeight = (mapImage.height / mapImage.width) * desiredWidth;
-
-                const centerX = (mapCanvas.width - desiredWidth) / 2;
-                const centerY = (mapCanvas.height - desiredHeight) / 2;
-                mapCtx.drawImage(mapImage, centerX, centerY, desiredWidth, desiredHeight);
-            };
-            mapImage.src = mapLocation;
+            DrawMap(option.innerText);
         });
     });
 });
+}
+
+DrawMapLogic();
+
+function DrawMap(location) {
+    const mapCanvas = document.getElementById('canvas');
+    const mapCtx = mapCanvas.getContext('2d');
+    const mapLocation = "/static/images/maps/" + location.replace(/ /g, "_") + ".png";
+
+    const mapImage = new Image();
+    mapImage.onload = function () {
+        mapCtx.clearRect(0, 0, mapCanvas.width, mapCanvas.height);
+
+        const desiredWidth = 680;
+        const desiredHeight = (mapImage.height / mapImage.width) * desiredWidth;
+
+        const centerX = (mapCanvas.width - desiredWidth) / 2;
+        const centerY = (mapCanvas.height - desiredHeight) / 2;
+        mapCtx.drawImage(mapImage, centerX, centerY, desiredWidth, desiredHeight);
+    };
+    mapImage.src = mapLocation;
+}
+
+window.onload = function() {
+    var map = "404 Base";
+    DrawMap(map);
+};
 
 function AddScene() {
     const sequenceBox = document.querySelector('.sequence-box-container');
@@ -88,10 +101,10 @@ function ChangeTool(button) {
 
 function rgbToHex(rgb) {
     const rgbArray = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-    const hex = "#" + 
-         ("0" + parseInt(rgbArray[1],10).toString(16)).slice(-2) +
-         ("0" + parseInt(rgbArray[2],10).toString(16)).slice(-2) +
-         ("0" + parseInt(rgbArray[3],10).toString(16)).slice(-2);
+    const hex = "#" +
+        ("0" + parseInt(rgbArray[1], 10).toString(16)).slice(-2) +
+        ("0" + parseInt(rgbArray[2], 10).toString(16)).slice(-2) +
+        ("0" + parseInt(rgbArray[3], 10).toString(16)).slice(-2);
     return hex;
 }
 
@@ -111,7 +124,7 @@ function ColorChanged(color) {
     IncrementPastColors();
 }
 
-function IncrementPastColors(){
+function IncrementPastColors() {
     if (pastColors.length > 10) {
         pastColors.splice(10);
     }
@@ -132,14 +145,14 @@ const pencil = document.getElementById('pencil');
 cnv.addEventListener('mousedown', e => {
     x = e.offsetX;
     y = e.offsetY;
-    if(pencil.classList.contains('selected-tool')){
+    if (pencil.classList.contains('selected-tool')) {
         isDrawing = true;
     }
 });
 
 cnv.addEventListener('mousemove', e => {
     if (isDrawing === true) {
-        DrawLine(x,y,e.offsetX,e.offsetY);
+        DrawLine(x, y, e.offsetX, e.offsetY);
         x = e.offsetX;
         y = e.offsetY;
     }
@@ -147,7 +160,7 @@ cnv.addEventListener('mousemove', e => {
 
 cnv.addEventListener('mouseup', e => {
     if (isDrawing === true) {
-        DrawLine(x,y,e.offsetX,e.offsetY);
+        DrawLine(x, y, e.offsetX, e.offsetY);
         x = 0;
         y = 0;
         isDrawing = false;
@@ -162,4 +175,9 @@ function DrawLine(x1, y1, x2, y2) {
     ctx.lineTo(x2, y2);
     ctx.stroke();
     ctx.closePath();
+}
+
+function ClearCurrentCanvas() {
+    ctx.clearRect(0, 0, cnv.width, cnv.height);
+    DrawMapLogic();
 }
