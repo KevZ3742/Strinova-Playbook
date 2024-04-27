@@ -1,39 +1,41 @@
-function DrawMapLogic(){
-const dropdowns = document.querySelectorAll('.dropdown');
-dropdowns.forEach(dropdown => {
-    const select = dropdown.querySelector('.select');
-    const caret = dropdown.querySelector('.caret');
-    const menu = dropdown.querySelector('.menu');
-    const options = dropdown.querySelectorAll('.menu li');
-    const selected = dropdown.querySelector('.selected');
+function DrawMapLogic() {
+    console.log("DrawMapLogic");
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+        const select = dropdown.querySelector('.select');
+        const caret = dropdown.querySelector('.caret');
+        const menu = dropdown.querySelector('.menu');
+        const options = dropdown.querySelectorAll('.menu li');
+        const selected = dropdown.querySelector('.selected');
 
-    select.addEventListener('click', () => {
-        select.classList.toggle('select-clicked');
-        caret.classList.toggle('caret-rotate');
-        menu.classList.toggle('menu-open');
-    });
+        select.addEventListener('click', () => {
+            select.classList.toggle('select-clicked');
+            caret.classList.toggle('caret-rotate');
+            menu.classList.toggle('menu-open');
+        });
 
-    options.forEach(option => {
-        option.addEventListener('click', () => {
-            selected.innerText = option.innerText;
-            select.classList.remove('select-clicked');
-            caret.classList.remove('caret-rotate');
-            menu.classList.remove('menu-open');
-            options.forEach(option => {
-                option.classList.remove('active-dropdown');
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                selected.innerText = option.innerText;
+                select.classList.remove('select-clicked');
+                caret.classList.remove('caret-rotate');
+                menu.classList.remove('menu-open');
+                options.forEach(option => {
+                    option.classList.remove('active-dropdown');
+                });
+
+                option.classList.add('active-dropdown');
+
+                DrawMap(option.innerText);
             });
-
-            option.classList.add('active-dropdown');
-
-            DrawMap(option.innerText);
         });
     });
-});
 }
 
 DrawMapLogic();
 
 function DrawMap(location) {
+    console.log("DrawMap");
     const mapCanvas = document.getElementById('canvas');
     const mapCtx = mapCanvas.getContext('2d');
     const mapLocation = "/static/images/maps/" + location.replace(/ /g, "_") + ".png";
@@ -52,7 +54,7 @@ function DrawMap(location) {
     mapImage.src = mapLocation;
 }
 
-window.onload = function() {
+window.onload = function () {
     var map = "404 Base";
     DrawMap(map);
 };
@@ -179,5 +181,6 @@ function DrawLine(x1, y1, x2, y2) {
 
 function ClearCurrentCanvas() {
     ctx.clearRect(0, 0, cnv.width, cnv.height);
-    DrawMapLogic();
+    map = document.querySelector('.active-dropdown').innerText;
+    DrawMap(map);
 }
