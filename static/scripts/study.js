@@ -24,9 +24,22 @@ dropdowns.forEach(dropdown => {
 
             option.classList.add('active-dropdown');
 
-            const map = document.querySelector('.map');
+            const mapCanvas = document.getElementById('canvas');
+            const mapCtx = mapCanvas.getContext('2d');
             var mapLocation = "/static/images/maps/" + option.innerText.replace(/ /g, "_") + ".png";
-            map.src = mapLocation;
+
+            const mapImage = new Image();
+            mapImage.onload = function() {
+                mapCtx.clearRect(0, 0, mapCanvas.width, mapCanvas.height);
+
+                const desiredWidth = 680;
+                const desiredHeight = (mapImage.height / mapImage.width) * desiredWidth;
+
+                const centerX = (mapCanvas.width - desiredWidth) / 2;
+                const centerY = (mapCanvas.height - desiredHeight) / 2;
+                mapCtx.drawImage(mapImage, centerX, centerY, desiredWidth, desiredHeight);
+            };
+            mapImage.src = mapLocation;
         });
     });
 });
@@ -114,11 +127,14 @@ var y = 0;
 var isDrawing = false;
 const cnv = document.getElementById('canvas');
 const ctx = cnv.getContext('2d');
+const pencil = document.getElementById('pencil');
 
 cnv.addEventListener('mousedown', e => {
     x = e.offsetX;
     y = e.offsetY;
-    isDrawing = true;
+    if(pencil.classList.contains('selected-tool')){
+        isDrawing = true;
+    }
 });
 
 cnv.addEventListener('mousemove', e => {
