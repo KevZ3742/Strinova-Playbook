@@ -203,6 +203,5 @@ function DrawLine(x1, y1, x2, y2) {
 function ClearCurrentCanvas() {
     ctx.clearRect(0, 0, cnv.width, cnv.height);
     map = document.querySelector('.active-dropdown').innerText;
-    drawingLog.push("clear");
     DrawMap(map);
 }
