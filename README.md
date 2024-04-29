@@ -1,7 +1,7 @@
 # Strinova Playbook
 
 todo:
-- erase tool
+- erase tool (words with drawing)
 - image tool
 - video tool
 - sequences
