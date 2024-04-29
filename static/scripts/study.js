@@ -26,6 +26,7 @@ function DrawMapLogic() {
                 option.classList.add('active-dropdown');
 
                 DrawMap(option.innerText);
+                drawingLog = [];
             });
         });
     });
@@ -179,7 +180,9 @@ cnv.addEventListener('mousemove', e => {
                     const [x1, y1, x2, y2] = item[j];
                     if (isPointOnLine(x, y, x1, y1, x2, y2)) {
                         drawingLog.splice(i, 1);
-                        ClearCurrentCanvas();
+                        ctx.clearRect(0, 0, cnv.width, cnv.height);
+                        map = document.querySelector('.active-dropdown').innerText;
+                        DrawMap(map);
                         setTimeout(function () {
                             for (let k = 0; k < drawingLog.length; k++) {
                                 const item = drawingLog[k];
@@ -236,6 +239,7 @@ function ClearCurrentCanvas() {
     ctx.clearRect(0, 0, cnv.width, cnv.height);
     map = document.querySelector('.active-dropdown').innerText;
     DrawMap(map);
+    drawingLog = [];
 }
 
 function isMouseOverLine(x, y) {
