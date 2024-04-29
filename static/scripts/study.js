@@ -1,5 +1,4 @@
 function DrawMapLogic() {
-    console.log("DrawMapLogic");
     const dropdowns = document.querySelectorAll('.dropdown');
     dropdowns.forEach(dropdown => {
         const select = dropdown.querySelector('.select');
@@ -35,7 +34,6 @@ function DrawMapLogic() {
 DrawMapLogic();
 
 function DrawMap(location) {
-    console.log("DrawMap");
     const mapCanvas = document.getElementById('canvas');
     const mapCtx = mapCanvas.getContext('2d');
     const mapLocation = "/static/images/maps/" + location.replace(/ /g, "_") + ".png";
@@ -137,18 +135,26 @@ function IncrementPastColors() {
     });
 }
 
+let drawingLog = [];
+
 var x = 0;
 var y = 0;
+
 var isDrawing = false;
 const cnv = document.getElementById('canvas');
 const ctx = cnv.getContext('2d');
 const pencil = document.getElementById('pencil');
+
+var isErasing = false;
+const eraser = document.getElementById('eraser');
 
 cnv.addEventListener('mousedown', e => {
     x = e.offsetX;
     y = e.offsetY;
     if (pencil.classList.contains('selected-tool')) {
         isDrawing = true;
+    }else if (eraser.classList.contains('selected-tool')) {
+        isErasing = true;
     }
 });
 
@@ -157,6 +163,10 @@ cnv.addEventListener('mousemove', e => {
         DrawLine(x, y, e.offsetX, e.offsetY);
         x = e.offsetX;
         y = e.offsetY;
+    }
+
+    if (isErasing === true) {
+        // ctx.clearRect(e.offsetX, e.offsetY, 10, 10);
     }
 });
 
@@ -167,7 +177,26 @@ cnv.addEventListener('mouseup', e => {
         y = 0;
         isDrawing = false;
     }
+
+    if (isErasing === true) {
+        ctx.clearRect(e.offsetX, e.offsetY, 10, 10);
+        isErasing = false;
+    }
 });
+
+function LogDrawing(x1, y1, x2, y2, color, lineWidth) {
+    let drawingItem =[];
+    drawingItem.push({
+        x1: x1,
+        y1: y1,
+        x2: x2,
+        y2: y2,
+        color: color,
+        lineWidth: lineWidth
+    });
+
+    return drawingItem;
+}
 
 function DrawLine(x1, y1, x2, y2) {
     ctx.beginPath();
@@ -177,6 +206,9 @@ function DrawLine(x1, y1, x2, y2) {
     ctx.lineTo(x2, y2);
     ctx.stroke();
     ctx.closePath();
+
+    drawingLog.push(LogDrawing(x1, y1, x2, y2, ctx.strokeStyle , ctx.lineWidth));
+    console.log(drawingLog);
 }
 
 function ClearCurrentCanvas() {
