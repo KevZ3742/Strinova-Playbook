@@ -188,7 +188,7 @@ cnv.addEventListener('mousemove', e => {
                                     DrawLineGivenColor(x1, y1, x2, y2, color);
                                 }
                             }
-                        }, 10);
+                        }, 5);
                     }
                 }
             }
