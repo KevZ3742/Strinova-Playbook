@@ -136,25 +136,31 @@ function IncrementPastColors() {
 }
 
 let drawingLog = [];
+let drawingItem = [];
 
 var x = 0;
 var y = 0;
 
-var isDrawing = false;
 const cnv = document.getElementById('canvas');
 const ctx = cnv.getContext('2d');
-const pencil = document.getElementById('pencil');
 
-var isErasing = false;
+var isDrawing = false;
+const pencil = document.getElementById('pencil');
+var isEarasing = false;
 const eraser = document.getElementById('eraser');
 
+function LogDrawing(x1, y1, x2, y2, color) {
+    let item = [x1, y1, x2, y2, color];
+    drawingItem.push(item);
+}
+
 cnv.addEventListener('mousedown', e => {
-    x = e.offsetX;
-    y = e.offsetY;
     if (pencil.classList.contains('selected-tool')) {
+        x = e.offsetX;
+        y = e.offsetY;
         isDrawing = true;
-    }else if (eraser.classList.contains('selected-tool')) {
-        isErasing = true;
+    } else if (eraser.classList.contains('selected-tool')) {
+        isEarasing = true;
     }
 });
 
@@ -163,10 +169,8 @@ cnv.addEventListener('mousemove', e => {
         DrawLine(x, y, e.offsetX, e.offsetY);
         x = e.offsetX;
         y = e.offsetY;
-    }
-
-    if (isErasing === true) {
-        // ctx.clearRect(e.offsetX, e.offsetY, 10, 10);
+    }else if(isEarasing === true){
+        
     }
 });
 
@@ -176,27 +180,13 @@ cnv.addEventListener('mouseup', e => {
         x = 0;
         y = 0;
         isDrawing = false;
-    }
-
-    if (isErasing === true) {
-        ctx.clearRect(e.offsetX, e.offsetY, 10, 10);
-        isErasing = false;
+        drawingLog.push(drawingItem);
+        drawingItem = [];
+        console.log(drawingLog);
+    } else if (isEarasing === true) {
+        isEarasing = false;
     }
 });
-
-function LogDrawing(x1, y1, x2, y2, color, lineWidth) {
-    let drawingItem =[];
-    drawingItem.push({
-        x1: x1,
-        y1: y1,
-        x2: x2,
-        y2: y2,
-        color: color,
-        lineWidth: lineWidth
-    });
-
-    return drawingItem;
-}
 
 function DrawLine(x1, y1, x2, y2) {
     ctx.beginPath();
@@ -207,8 +197,7 @@ function DrawLine(x1, y1, x2, y2) {
     ctx.stroke();
     ctx.closePath();
 
-    drawingLog.push(LogDrawing(x1, y1, x2, y2, ctx.strokeStyle , ctx.lineWidth));
-    console.log(drawingLog);
+    LogDrawing(x1, y1, x2, y2, ctx.strokeStyle);
 }
 
 function ClearCurrentCanvas() {
