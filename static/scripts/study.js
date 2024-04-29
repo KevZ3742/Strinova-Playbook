@@ -169,8 +169,30 @@ cnv.addEventListener('mousemove', e => {
         DrawLine(x, y, e.offsetX, e.offsetY);
         x = e.offsetX;
         y = e.offsetY;
-    }else if(isEarasing === true){
-        
+    } else if (isEarasing === true) {
+        x = e.offsetX;
+        y = e.offsetY;
+        if (isMouseOverLine(x, y)) {
+            for (let i = 0; i < drawingLog.length; i++) {
+                const item = drawingLog[i];
+                for (let j = 0; j < item.length; j++) {
+                    const [x1, y1, x2, y2] = item[j];
+                    if (isPointOnLine(x, y, x1, y1, x2, y2)) {
+                        drawingLog.splice(i, 1);
+                        ClearCurrentCanvas();
+                        setTimeout(function () {
+                            for (let k = 0; k < drawingLog.length; k++) {
+                                const item = drawingLog[k];
+                                for (let l = 0; l < item.length; l++) {
+                                    const [x1, y1, x2, y2, color] = item[l];
+                                    DrawLineGivenColor(x1, y1, x2, y2, color);
+                                }
+                            }
+                        }, 10);
+                    }
+                }
+            }
+        }
     }
 });
 
@@ -200,9 +222,42 @@ function DrawLine(x1, y1, x2, y2) {
     LogDrawing(x1, y1, x2, y2, ctx.strokeStyle);
 }
 
+function DrawLineGivenColor(x1, y1, x2, y2, color) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3;
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+    ctx.closePath();
+}
+
 function ClearCurrentCanvas() {
     ctx.clearRect(0, 0, cnv.width, cnv.height);
     map = document.querySelector('.active-dropdown').innerText;
-    drawingLog = [];
     DrawMap(map);
+}
+
+function isMouseOverLine(x, y) {
+    for (let i = 0; i < drawingLog.length; i++) {
+        const item = drawingLog[i];
+        for (let j = 0; j < item.length; j++) {
+            const [x1, y1, x2, y2] = item[j];
+            if (isPointOnLine(x, y, x1, y1, x2, y2)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function isPointOnLine(px, py, x1, y1, x2, y2) {
+    const d1 = distance(px, py, x1, y1);
+    const d2 = distance(px, py, x2, y2);
+    const lineLength = distance(x1, y1, x2, y2);
+    return d1 + d2 >= lineLength - 0.1 && d1 + d2 <= lineLength + 0.1;
+}
+
+function distance(x1, y1, x2, y2) {
+    return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
 }
