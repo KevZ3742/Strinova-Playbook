@@ -162,6 +162,25 @@ cnv.addEventListener('mousedown', e => {
         isDrawing = true;
     } else if (eraser.classList.contains('selected-tool')) {
         isEarasing = true;
+    }else if (text.classList.contains('selected-tool')) {
+        var i, left = e.clientX, top = e.clientY;
+        i = document.createElement('textarea');
+        i.style.left = left + "px";
+        i.style.top = top + "px";
+        i.style.position = "absolute";
+        i.style.width = "200px";
+        i.style.color = "white";
+        i.style.backgroundColor = "rgb(25, 25, 25, .8)";
+        i.style.border = "1px solid white";
+        i.style.borderRadius = ".3em";
+        i.style.zIndex = 2;
+        i.value = "Enter Text";
+        i.addEventListener('mousedown', function() {
+            if (this.value === "Enter Text") {
+                this.value = "";
+            }
+        });
+        document.body.appendChild(i);
     }
 });
 
