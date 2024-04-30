@@ -162,27 +162,54 @@ cnv.addEventListener('mousedown', e => {
         isDrawing = true;
     } else if (eraser.classList.contains('selected-tool')) {
         isEarasing = true;
-    }else if (text.classList.contains('selected-tool')) {
+    } else if (text.classList.contains('selected-tool')) {
         var i, left = e.clientX, top = e.clientY;
         i = document.createElement('textarea');
         i.style.left = left + "px";
         i.style.top = top + "px";
         i.style.position = "absolute";
-        i.style.width = "200px";
         i.style.color = "white";
         i.style.backgroundColor = "rgb(25, 25, 25, .8)";
         i.style.border = "1px solid white";
         i.style.borderRadius = ".3em";
         i.style.zIndex = 2;
         i.value = "Enter Text";
-        i.addEventListener('mousedown', function() {
-            if (this.value === "Enter Text") {
-                this.value = "";
+        i.addEventListener('mousedown', function (e) {
+            if (i.value === "Enter Text") {
+                i.value = "";
             }
+
+            const initialMouseX = e.clientX;
+            const initialMouseY = e.clientY;
+            const initialTextareaLeft = parseInt(this.style.left, 10);
+            const initialTextareaTop = parseInt(this.style.top, 10);
+
+            const offsetX = initialMouseX - initialTextareaLeft;
+            const offsetY = initialMouseY - initialTextareaTop;
+
+            const textarea = this;
+
+            function handleMouseMove(moveEvent) {
+                const newX = moveEvent.clientX - offsetX;
+                const newY = moveEvent.clientY - offsetY;
+
+                textarea.style.left = newX + 'px';
+                textarea.style.top = newY + 'px';
+            }
+
+            function handleMouseUp() {
+                document.removeEventListener('mousemove', handleMouseMove);
+                document.removeEventListener('mouseup', handleMouseUp);
+            }
+
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
         });
+
         document.body.appendChild(i);
     }
 });
+
 
 cnv.addEventListener('mousemove', e => {
     if (isDrawing === true) {
