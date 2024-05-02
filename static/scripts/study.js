@@ -201,6 +201,8 @@ cnv.addEventListener('mousedown', e => {
             function handleMouseUp() {
                 document.removeEventListener('mousemove', handleMouseMove);
                 document.removeEventListener('mouseup', handleMouseUp);
+
+                // trash element if over trashcan
             }
 
             document.addEventListener('mousemove', handleMouseMove);

@@ -6,7 +6,7 @@
     top: 0;
     left: 0;
     padding-top: 74px;
-    z-index: 2;
+    z-index: 3;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -22,7 +22,7 @@
     top: 0;
     right: 0;
     padding-top: 74px;
-    z-index: 2;
+    z-index: 3;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -252,7 +252,7 @@ button {
 }
 
 canvas {
-    z-index: 100;
+    z-index: 1;
 }
 
 .delete-box {
@@ -291,4 +291,16 @@ canvas {
 
 .clear-sequence:hover {
     background-color: #999999;
+}
+
+.trash {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    width: 3em;
+    height: 3em;
+    border: red solid 3px;
+    border-radius: .5em;
+    z-index: 3;
 }
